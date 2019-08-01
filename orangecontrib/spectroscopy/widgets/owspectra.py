@@ -8,7 +8,7 @@ from xml.sax.saxutils import escape
 
 from AnyQt.QtWidgets import QWidget, QGraphicsItem, QPushButton, QMenu, \
     QGridLayout, QAction, QVBoxLayout, QApplication, QWidgetAction, QLabel, \
-    QShortcut, QToolTip, QGraphicsRectItem, QGraphicsTextItem
+    QShortcut, QToolTip, QGraphicsRectItem, QGraphicsTextItem, QGroupBox, QHBoxLayout
 from AnyQt.QtGui import QColor, QPixmapCache, QPen, QKeySequence
 from AnyQt.QtCore import Qt, QRectF, QPointF
 from AnyQt.QtCore import pyqtSignal
@@ -671,8 +671,12 @@ class CurvePlot(QWidget, OWComponent, SelectionGroupMixin):
         layout.addWidget(self.range_e_y1, 1, 1)
         layout.addWidget(QLabel("-"), 1, 2)
         layout.addWidget(self.range_e_y2, 1, 3)
+        hbox = QHBoxLayout()
         b = gui.button(None, self, "Apply", callback=self.set_limits)
-        layout.addWidget(b, 2, 3, Qt.AlignRight)
+        lock = gui.button(None, self, "Lock", toggleButton=True)
+        hbox.addWidget(lock)
+        hbox.addWidget(b)
+        layout.addLayout(hbox, 2, 3, Qt.AlignRight)
         range_action.setDefaultWidget(range_box)
         range_menu.addAction(range_action)
 
